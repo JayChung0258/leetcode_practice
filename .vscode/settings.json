@@ -1,6 +1,8 @@
 {
   "files.associations": {
+    "*.go": "go",
     "iostream": "cpp",
-    "unordered_map": "cpp"
+    "unordered_map": "cpp",
+    "vector": "cpp"
   }
 }

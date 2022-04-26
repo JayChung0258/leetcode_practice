@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <queue>
 #include <unordered_map>
 #include <vector>
 
@@ -20,13 +21,13 @@ struct TreeNode {
 
 class Solution {
    public:
-    int minDepth(TreeNode *root) {
+    int minDepth_DFS(TreeNode *root) {
         if (!root) {
             return 0;
         }
 
-        int left = minDepth(root->left);
-        int right = minDepth(root->right);
+        int left = minDepth_DFS(root->left);
+        int right = minDepth_DFS(root->right);
 
         if (left == 0) {
             return 1 + right;
@@ -35,6 +36,44 @@ class Solution {
         } else {
             return min(left, right) + 1;
         }
+    }
+
+    int minDepth_BFS(TreeNode *root) {
+        if (!root) {
+            return 0;
+        }
+
+        int minimun = 1;
+
+        queue<TreeNode *> q;
+        q.push(root);
+
+        while (!q.empty()) {
+            int cnt = q.size();
+
+            // once a layer
+            while (cnt > 0) {
+                TreeNode *tmp = q.front();
+                q.pop();
+
+                if (!tmp->left && !tmp->right) {
+                    return minimun;
+                }
+
+                if (tmp->left) {
+                    q.push(tmp->left);
+                }
+
+                if (tmp->right) {
+                    q.push(tmp->right);
+                }
+
+                cnt--;
+            }
+
+            minimun++;
+        }
+        return minimun;
     }
 };
 
